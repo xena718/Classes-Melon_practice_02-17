@@ -19,16 +19,16 @@ class MelonType:
 
         self.pairings = [] # not part of the _init_ arguments
 
-
     def add_pairing(self, pairing):
         """Add a food pairing to the instance's pairings list."""
         self.pairings.append(pairing)
-        # Fill in the rest
 
     def update_code(self, new_code):
         """Replace the reporting code with the new_code."""
         self.code = new_code
-        # Fill in the rest
+
+    # def __repr__(self):
+    #     return f"MeloneType code = {self.code}"  # finish f string later
 
 
 def make_melon_types():
@@ -64,6 +64,7 @@ def make_melon_types():
 # print(make_melon_types())
 
 melon_types = make_melon_types()
+# print(melon_types)
 
 def print_pairing_info(melon_types):
     """Prints information about each melon type's pairings."""
@@ -71,17 +72,29 @@ def print_pairing_info(melon_types):
     for melon in melon_types:
         melon_pairings = "\n-".join(melon.pairings)
         print(f"{melon.name} pairs with \n-{melon_pairings}")
+        # print approach #2
+        # print(#melon name pairs with)
+        # for pairing in melon_pairings:
+        #     print(pairing)
+
         # print(f"{melon.name} pairs with \n-{"\n-".join(melon.pairings)}") #doesn't work
     # Fill in the rest
 
-print_pairing_info(melon_types)
+# print_pairing_info(melon_types)
 
 # print("\n -".join(["a","b","c"]))
 def make_melon_type_lookup(melon_types):
     """Takes a list of MelonTypes and returns a dictionary of melon type by code."""
 
-    # Fill in the rest
+    # all_melon_types = make_melon_types()
+    # dict_melon_types = {"musk":muskmelon,"yw":yellow_watermelon}
+    dict_code_melontype = {}
 
+    for melon_type in melon_types:
+        dict_code_melontype[melon_type.code] = melon_type
+    return dict_code_melontype
+        
+# print(make_melon_type_lookup(melon_types))
 
 ############
 # Part 2   #
@@ -90,18 +103,58 @@ def make_melon_type_lookup(melon_types):
 
 class Melon:
     """A melon in a melon harvest."""
-
-    # Fill in the rest
-    # Needs __init__ and is_sellable methods
-
+    def __init__(self,melon_type,shape_rating,color_rating,field_num,harvester):
+        self.melon_type = melon_type
+        self.shape_rating = shape_rating
+        self.color_rating=color_rating
+        self.field_num=field_num
+        self.harvester = harvester
+        # self.is_sellable = self.is_sellable()
+        
+    def is_sellable(self):
+        """sellable: if both its shape and color ratings are greater than 5,and it did not come from field 3."""
+        return self.shape_rating > 5 and self.color_rating > 5 and self.field_num !=3
 
 def make_melons(melon_types):
     """Returns a list of Melon objects."""
 
-    # Fill in the rest
+    melons = []
 
+    # XXX = Melon(melon_type,shape_rating,color_rating,field_num,harvester)
+    # all_melon_types.append(xxx)
+
+    melon_1 = Melon("yw", 8, 7, 2, "Sheila")
+    melon_2 = Melon("yw", 3, 4, 2, "Sheila")
+    melon_3 = Melon("yw", 9, 8, 3, "Sheila")
+    melon_4 = Melon("cas", 10, 6, 35, "Sheila")
+    melon_5 = Melon("cren", 8, 9, 35, "Michael")
+    melon_6 = Melon("cren",8,2,35,"Michael")
+    melon_7 = Melon("cren",2,3,4,"Michael")
+    melon_8 = Melon("musk",6,7,4,"Michael")
+    melon_9 = Melon("yw",7,10,3,"Sheila")
+
+    melons.append(melon_1)
+    melons.append(melon_2)
+    melons.append(melon_3)
+    melons.append(melon_4)
+    melons.append(melon_5)
+    melons.append(melon_6)
+    melons.append(melon_7)
+    melons.append(melon_8)
+    melons.append(melon_9)
+
+    return melons
+
+melons = make_melons(melon_types)
 
 def get_sellability_report(melons):
     """Given a list of melon object, prints whether each one is sellable."""
-
-    # Fill in the rest
+# Harvested by Sheila from Field 2 (CAN BE SOLD)
+# Harvested by Sheila from Field 2 (NOT SELLABLE)
+    for melon in melons:
+        if melon.is_sellable():
+            print(f"Harvested by {melon.harvester} from Field {melon.field_num} (CAN BE SOLD)")
+        else:
+            print(f"Harvested by {melon.harvester} from Field {melon.field_num} (NOT SELLABLE)")
+        
+get_sellability_report(melons)
